@@ -67,7 +67,7 @@ export default function StaticCardInput() {
   }
   
   return (
-    <div className="flex flex-col justify-between ">
+    <div className="flex flex-col justify-between pb-5">
       {(qrPopup&&(qrStaticCard!==""))?<div className="w-9/10 flex justify-center">
         <img className="h-50 shadow-2xl z-50   w-50" src={qrStaticCard!=""?qrStaticCard:"NA"}></img>
         </div>:

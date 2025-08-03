@@ -19,6 +19,23 @@ async function setStaticCardData(dataStr:string,b64QR:string|null,email:string|n
     
 
 }
+async function setDynamicCardData(dataStr:string,b64QR:string|null,email:string|null){
+    try {
+        if(dataStr==null||email==null ) return;
+        const docRef = doc(db,"dynamic",email);
+        await setDoc(docRef,{
+            dataStr:dataStr,
+            b64QR:b64QR
+        });
+        alert("201 Card updated");
+    } catch (error) {
+        alert("Error Updating card : "+error);
+        console.error(error);
+        return;
+    }
+    
+
+}
 
 async function getStaticCardData(email:string|null){
     try{
@@ -31,4 +48,15 @@ async function getStaticCardData(email:string|null){
         alert("Error Fetching data : "+error);
     }
 }
-export {setStaticCardData,getStaticCardData}
+async function getDynamicCardData(email:string|null){
+    try{
+        if(email==null)return;
+        const docRef = doc(db,"dynamic",email);
+        const data = await getDoc(docRef);
+
+        return (data.exists()?data.data():null);
+    }catch(error){
+        alert("Error Fetching data : "+error);
+    }
+}
+export {setStaticCardData,getStaticCardData,setDynamicCardData,getDynamicCardData}

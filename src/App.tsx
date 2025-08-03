@@ -6,6 +6,7 @@ import DashBoard from "./components/DashBoard";
 
 import { AuthContext } from "./context/AuthContext";
 import { EmailContext } from "./context/EmailContext";
+import { BrowserRouter as Router, Routes,Route } from "react-router-dom";
 
 const auth = getAuth(app);
 
@@ -26,27 +27,25 @@ function App() {
     },[]);
   
   
-  if(userData===null){
-    return (
-    <>
-      <AuthPage/>
-    </>
-  )
-  }
-  else {
     return (
       <>
-
-      <AuthContext.Provider value={auth}>
-        <EmailContext.Provider value={userData.email}>
-          <DashBoard/>
-        </EmailContext.Provider>
-      </AuthContext.Provider>
+      <Router>
+        <Routes>
+          <Route path="/" element = {(userData===null)?<AuthPage/>:
+          <AuthContext.Provider value={auth}>
+            <EmailContext.Provider value={userData.email}>
+              <DashBoard/>
+            </EmailContext.Provider>
+          </AuthContext.Provider>}/>
+          <Route path="view" element = {<>ok</>}/>
+        </Routes>
+      </Router>
+      
       
       
       </>
     )
-  }
+  
   
 }
 
