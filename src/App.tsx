@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged, type User } from "firebase/auth";
 import app from "./lib/firebase";
 import { useState,useEffect } from "react";
 import DashBoard from "./components/DashBoard";
+import DynamicCardServe from "./components/DynamicCardServe";
 
 import { AuthContext } from "./context/AuthContext";
 import { EmailContext } from "./context/EmailContext";
@@ -37,7 +38,7 @@ function App() {
               <DashBoard/>
             </EmailContext.Provider>
           </AuthContext.Provider>}/>
-          <Route path="/dyncard" element = {<>ok</>}/>
+          <Route path="/dyncard" element = {<DynamicCardServe/>}/>
         </Routes>
       </Router>
       

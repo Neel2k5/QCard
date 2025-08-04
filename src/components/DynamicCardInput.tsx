@@ -1,14 +1,62 @@
-import { useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { FaQrcode, FaSave, FaTrash, FaUpload } from "react-icons/fa";
-//import { useEmail } from "../context/EmailContext";
-//import qrCode from "qrcode";
+import { useEmail } from "../context/EmailContext";
+import qrCode from "qrcode";
+import { getDynamicCardData, setDynamicCardData } from "../lib/firebaseDBController";
 
 
 export default function DynamicCardInput() {
+    const email = useEmail();
+    const endpt = import.meta.env.VITE_DYNAMIC_ENDPOINT;
+
+    const qrURL = `${endpt}?email=${email}`;
+
+    
     const [dynamicCardSRC,setDynamicCardSRC]=useState("");
     const [qrDynamicCard,setqrDynamicCard]=useState("");
     const [qrPopup,setQRPopup] = useState(false);
 
+    useEffect( ()=>{
+      initStates(); // on load set the url and qr code
+      
+    },[]);
+
+    async function  qrUpdate() {
+      let qrb64 = localStorage.getItem("dynamicCardB64"); //check if qr code exists in local storage
+      if(!qrb64){// qr code's link is fixed from env
+        
+        qrb64 =await qrCode.toDataURL(qrURL);
+        localStorage.setItem("dynamicCardB64",qrb64);
+      }
+      setqrDynamicCard(qrb64);
+    }
+    async function initStates() {
+      await qrUpdate();
+
+      let dynSRC = localStorage.getItem("dynamicCardSRC");
+      if(!dynSRC){
+        // look in db
+        try {
+        const data = await getDynamicCardData(email);
+        if (data) {// check in db
+          dynSRC= data.dataStr;
+          
+        }
+          } catch (err) {
+            console.error("Failed to fetch dynamic card from DB:", err);
+          }
+      }
+      //save the dynamic card image file
+      if (dynSRC) {
+        setDynamicCardSRC(dynSRC);
+        localStorage.setItem("dynamicCardSRC", dynSRC); 
+      } else {
+        setDynamicCardSRC("");
+        localStorage.setItem("dynamicCardSRC", "");
+      }
+      
+    }
+    
     function handleDynamicCardUpload(e:ChangeEvent<HTMLInputElement>){
         const file = e.target.files?.[0];
         if(!file)return;
@@ -26,23 +74,14 @@ export default function DynamicCardInput() {
         Reader.readAsDataURL(file);
     };
     async function saveDynamicCardState() {
-
+    //update the local storage
     localStorage.setItem("dynamicCardSRC",dynamicCardSRC);
+    //update the db
     try{
-      if(dynamicCardSRC!=="")
-      {
-      //const qrb64 =await qrCode.toDataURL("");
-      //localStorage.setItem("dynamicCardB64",qrb64);
-      //setqrDynamicCard(qrb64);
-      //Save to db
-      }else {
-        setqrDynamicCard("");
-        //localStorage.setItem("dynamicCardSRC","");
-        //save to db
-        }
+      setDynamicCardData(dynamicCardSRC,email);
     }
     catch(error){
-      alert("500 : QR could not be generated or stored !");
+      alert("500 : Card could'nt be stored in db!");
       console.error(error);
       return;
     }
@@ -54,7 +93,7 @@ export default function DynamicCardInput() {
         <div className="flex justify-center  ">
             {
             (qrPopup)?<div className="w-9/10 flex justify-center">
-        <img className="h-50 shadow-2xl z-50   w-50" src={qrDynamicCard!=""?qrDynamicCard:"NA"}></img>
+        <img className="h-50 shadow-2xl z-50   w-50" src={qrDynamicCard!="."?qrDynamicCard:"NA"}></img>
         </div>:
             <img className="text-2xl bg-neutral-500 ml-5 font-mono m-3 mb-1 w-9/10 resize-none outline-0 p-0 h-50"
             src={dynamicCardSRC!=""?dynamicCardSRC:""}>

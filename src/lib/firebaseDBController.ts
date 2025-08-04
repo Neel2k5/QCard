@@ -19,13 +19,12 @@ async function setStaticCardData(dataStr:string,b64QR:string|null,email:string|n
     
 
 }
-async function setDynamicCardData(dataStr:string,b64QR:string|null,email:string|null){
+async function setDynamicCardData(dataStr:string,email:string|null){
     try {
         if(dataStr==null||email==null ) return;
         const docRef = doc(db,"dynamic",email);
         await setDoc(docRef,{
             dataStr:dataStr,
-            b64QR:b64QR
         });
         alert("201 Card updated");
     } catch (error) {
