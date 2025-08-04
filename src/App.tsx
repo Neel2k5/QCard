@@ -9,7 +9,7 @@ import { EmailContext } from "./context/EmailContext";
 import { BrowserRouter as Router, Routes,Route } from "react-router-dom";
 
 const auth = getAuth(app);
-
+//https://q-card-mu.vercel.app/    vercel url
 function App() {
  
   const [userData,setUserData] = useState<User|null>(null);
@@ -37,7 +37,7 @@ function App() {
               <DashBoard/>
             </EmailContext.Provider>
           </AuthContext.Provider>}/>
-          <Route path="view" element = {<>ok</>}/>
+          <Route path="dyncard" element = {<>ok</>}/>
         </Routes>
       </Router>
       
