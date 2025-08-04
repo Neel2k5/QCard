@@ -77,6 +77,7 @@ export default function StaticCardInput() {
         setStaticCard(e.target.value);
       }}
       ></textarea>}
+      <div className="flex justify-center"><p className="mx-9 font-mono">{"Bytes Left : "+bytesLeft  }</p></div>
       <div className="flex mt-2 mr-8 flex-row-reverse justify-between ">
         <div className="flex ">
         <button className="mx-1 cursor-pointer  z-30 bg-blue-500 p-3 text-white hover:bg-blue-700 active:bg-blue-400 text-3xl "
@@ -102,7 +103,7 @@ export default function StaticCardInput() {
       
         </div>
         
-        <p className="mx-9 font-mono">{"Bytes Left : "+bytesLeft  }</p>
+        
       </div>
     </div>
   )

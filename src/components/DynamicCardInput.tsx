@@ -94,8 +94,8 @@ export default function DynamicCardInput() {
   }
 
   return (
-    <div className="flexn flex-col pb-5 ">
-        <div className="flex justify-center  ">
+    <div className="flex  flex-col pb-5 ">
+        <div className="flex justify-center   ">
             {
             (qrPopup)?<div className="w-9/10 flex justify-center">
         <img className="h-50 shadow-2xl z-50   w-50" src={qrDynamicCard!="."?qrDynamicCard:"NA"}></img>
@@ -104,7 +104,8 @@ export default function DynamicCardInput() {
             src={dynamicCardSRC!=""?dynamicCardSRC:""}>
             </img>}
         </div>
-        <div className="flex  flex-row-reverse pr-10">
+        <div className="font-mono text-sm p-0 m-0 text-wrap  mr-0 md:mr-10 flex justify-center "><div>Uploaded image must not exceed 700KB</div></div>
+        <div className="flex  flex-row-reverse pr-10 pt-3">
                 <button className="mx-1 cursor-pointer  z-30 bg-blue-500 p-3 text-white hover:bg-blue-700 active:bg-blue-400 text-3xl "
                 onClick={()=>{
                   setDynamicCardSRC("");
@@ -129,8 +130,10 @@ export default function DynamicCardInput() {
                     <FaUpload/>
                  <input type="file" accept="image/*" onChange={handleDynamicCardUpload} className="hidden"></input>
                 </label>
+                
                
         </div>
+        
     </div>    
   )
 }
