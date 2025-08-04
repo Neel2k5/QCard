@@ -64,10 +64,15 @@ export default function DynamicCardInput() {
             alert("Please upload a valid image file.");
             return;
         }
+        if (file.size > 800000) { // ~800 KB
+          alert("Image too large. Please upload an image under 800 KB.");
+          return;
+        }
 
         const Reader = new FileReader();
         Reader.onloadend= ()=>{
             const dynamicBuisnesscard = Reader.result as string;
+            
             setDynamicCardSRC(dynamicBuisnesscard);
 
         };
