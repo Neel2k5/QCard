@@ -37,7 +37,7 @@ function App() {
               <DashBoard/>
             </EmailContext.Provider>
           </AuthContext.Provider>}/>
-          <Route path="dyncard" element = {<>ok</>}/>
+          <Route path="/dyncard" element = {<>ok</>}/>
         </Routes>
       </Router>
       
