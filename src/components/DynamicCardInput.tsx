@@ -98,7 +98,7 @@ export default function DynamicCardInput() {
         <div className="flex justify-center   ">
             {
             (qrPopup)?<div className="w-9/10 flex justify-center">
-        <img className="h-50 shadow-2xl z-50   w-50" src={qrDynamicCard!="."?qrDynamicCard:"NA"}></img>
+        <img className="h-50 shadow-2xl   w-50" src={qrDynamicCard!="."?qrDynamicCard:"NA"}></img>
         </div>:
             <img className="text-2xl bg-neutral-500 ml-5 font-mono m-3 mb-1 w-9/10 resize-none outline-0 p-0 h-50"
             src={dynamicCardSRC!=""?dynamicCardSRC:""}>

@@ -32,18 +32,20 @@ function App() {
       <>
       <Router>
         <Routes>
-          <Route path="/" element = {(userData===null)?<AuthPage/>:
-          <AuthContext.Provider value={auth}>
-            <EmailContext.Provider value={userData.email}>
-              <DashBoard/>
-            </EmailContext.Provider>
-          </AuthContext.Provider>}/>
+          {/*Normal Operation*/}
+          <Route path="/" element = {
+            (userData===null)?
+            <AuthPage/>:
+            <AuthContext.Provider value={auth}>
+              <EmailContext.Provider value={userData.email}>
+                <DashBoard/>
+              </EmailContext.Provider>
+            </AuthContext.Provider>
+          }/>
+          {/*Serving data*/}
           <Route path="/dyncard" element = {<DynamicCardServe/>}/>
         </Routes>
       </Router>
-      
-      
-      
       </>
     )
   

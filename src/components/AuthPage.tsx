@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FcGoogle } from "react-icons/fc";
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword,signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 import app from "../lib/firebase.ts";
@@ -48,6 +48,10 @@ export default function AuthPage() {
         });
     }
 
+    useEffect(()=>{
+        alert("For testing or demonstration, log into {testuser@gmail.com, 123456}");
+    },[])
+
   return (
     <div className="bg-neutral-600 h-screen w-screen flex  justify-center">
         <div className="flex flex-col h-fit my-25 p-3 bg-white justify-end rounded-2xl">
@@ -68,7 +72,9 @@ export default function AuthPage() {
             </button>
 
             <a onClick={handleAuthTypeChange} className="py-2  text-blue-400 hover:text-blue-600">{(authType==1)?"Don't have an account? Signup":"Already have an account? Login"}</a>
+            
         </div>
+        
     </div>
   )
 }
